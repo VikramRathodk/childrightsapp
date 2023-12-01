@@ -1,3 +1,4 @@
+import 'package:childrightapp/Admin/changehomedata.dart';
 import 'package:childrightapp/Admin/manageQuiz.dart';
 import 'package:childrightapp/pages/HomeScrenn.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _AdminPageState extends State<AdminPage> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       initialIndex: 1,
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Admin'),
@@ -39,14 +40,18 @@ class _AdminPageState extends State<AdminPage> {
               Tab(
                 icon: Icon(Icons.quiz_sharp),
               ),
+              Tab(
+                icon: Icon(Icons.home),
+              ),
               
             ],
           ),
         ),
         body:  TabBarView(
           children: <Widget>[
-            ManageVideosPage(),
+             ManageVideosPage(),
             CreateQuizPage(),
+            ChangeHomeData(),
             
           ],
         ),
