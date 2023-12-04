@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChangeHomeData extends StatefulWidget {
   @override
@@ -9,10 +9,31 @@ class ChangeHomeData extends StatefulWidget {
 class _ChangeHomeDataState extends State<ChangeHomeData> {
   TextEditingController _textController = TextEditingController();
 
-  Future<void>_addToDatabase ()async{
-   Map<String ,dynamic> data = Map<String,dynamic>();
-   data['homeD'] = _textController.text;
-    await FirebaseFirestore.instance.collection("homeData").doc("first01").set(data);
+  Future<void> _addToDatabase() async {
+    Map<String, dynamic> data = {'homeD': _textController.text};
+
+    try {
+      await FirebaseFirestore.instance
+          .collection("homeData")
+          .doc("first01")
+          .set(data);
+
+      // Show SnackBar upon successful data update
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Home data updated successfully!'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (error) {
+      // Show SnackBar if an error occurs during data update
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to update home data.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
   }
 
   @override
