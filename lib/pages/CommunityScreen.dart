@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ForumPost {
   final String title;
   final String content;
-  final String author;
-  final DateTime date;
+  final String link;
 
   ForumPost({
     required this.title,
     required this.content,
-    required this.author,
-    required this.date,
+    required this.link,
   });
 }
 
@@ -24,80 +23,94 @@ class CommunityScreen extends StatefulWidget {
 class _CommunityScreenState extends State<CommunityScreen> {
   List<ForumPost> childrenRightsForumPosts = [
     ForumPost(
-      title: 'Importance of Education for Every Child',
+      title: 'Bal Raksha Bharat',
       content:
-          'Education is a fundamental right for every child. It empowers them to build a better future. How can we ensure access to quality education for all children?',
-      author: 'ChildAdvocate1',
-      date: DateTime(2023, 10, 20),
+          'For lasting change to happen, the hands of many must join as one. Since 2008, we’ve partnered with agencies at various levels towards actualizing the vision to build a new “Bharat”: one where children are given equal opportunities, wholesome nutrition and protection from exploitation; to untap the true potential of our Nation. We believe that a childhood nurtured holistically is a future well-secured.',
+      link: 'https://balrakshabharat.org/',
     ),
     ForumPost(
-      title: 'Child Protection Laws Discussion',
+      title: 'CRY (Child Rights and you)',
       content:
-          'Discussing the effectiveness of current child protection laws and potential improvements. What steps can be taken to ensure better protection for children in various contexts?',
-      author: 'RightsAdvocate23',
-      date: DateTime(2023, 11, 5),
+          'At CRY, they are committed to their vision for a happy, healthy, and creative childhood for every child. They include ensuring children in CRY-supported projects have access to free and quality education, primary healthcare and are safe from violence, abuse, and exploitation.',
+      link: 'https://www.cry.org/',
     ),
     ForumPost(
-      title: 'Child Labor Issues and Solutions',
+      title: 'Child Help Foundation',
       content:
-          'The issue of child labor persists in many parts of the world. Let\'s brainstorm solutions and actions to eradicate child labor and provide better opportunities for children.',
-      author: 'ActivistForKids',
-      date: DateTime(2023, 11, 15),
+          'Founded in 2010, Child Help Foundation (CHF) is a child-centric national non-profit organization committed to fulfillment of Child Rights as enshrined in the Indian constitution and UNCRC (United Nation Convention on the Rights of the Child).',
+      link: 'https://childhelpfoundation.in/',
     ),
     ForumPost(
-      title: 'Addressing Mental Health Challenges in Children',
+      title: 'The Akshaya Patra Foundation',
       content:
-          'Mental health issues among children are a growing concern. Let\'s discuss strategies to address mental health challenges and provide adequate support and resources for children.',
-      author: 'MentalHealthAwareness',
-      date: DateTime(2023, 12, 5),
+          'The Akshaya Patra Foundation is a non-profit organisation that operates on a public-private partnership (PPP) model. Since Akshaya Patra acts as an implementing partner of the Mid-Day Meal Scheme, there is firm support from the Government of India, the State Governments, and associated organizations.',
+      link: 'https://www.akshayapatra.org/',
     ),
     ForumPost(
-      title: 'Promoting Child Participation in Decision Making',
+      title: 'Katha Foundation',
       content:
-          'Empowering children to participate in decisions that affect them is vital. How can we encourage and facilitate meaningful participation of children in decision-making processes?',
-      author: 'ChildRightsActivist',
-      date: DateTime(2023, 12, 15),
+          'Started in 1988 with a magazine for children from the underserved communities, Katha’s work spans the literacy to literature continuum. By seamlessly connecting grassroots work in education and urban resurgence, Katha brings children living in poverty into reading and quality education.',
+      link: 'https://www.katha.org/',
+    ),
+    ForumPost(
+      title: 'K C Mahindra Education Trust (Nanhi Kali)',
+      content:
+          'Project Nanhi Kali provides 360-degree support to underprivileged girls from Class 1-10, with the objective of enabling them to complete their schooling with dignity.',
+      link: 'https://crm.fundoodata.com/users/login',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        
-        body: GridView.builder(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
-            childAspectRatio: 0.7, // Adjust this ratio as needed
-          ),
-          itemCount: childrenRightsForumPosts.length,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 2.0,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      childrenRightsForumPosts[index].title,
+      body: ListView.builder(
+        itemCount: childrenRightsForumPosts.length,
+        itemBuilder: (context, index) {
+          final Uri _url = Uri.parse(childrenRightsForumPosts[index].link);
+          return Card(
+            elevation: 2.0,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    childrenRightsForumPosts[index].title,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(childrenRightsForumPosts[index].content),
+                  SizedBox(height: 8.0),
+                  GestureDetector(
+                    onTap: () =>
+                        _launchUrl(_url),
+                    child: Text(
+                      'Link: ${childrenRightsForumPosts[index].link}',
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
                       ),
                     ),
-                    SizedBox(height: 8.0),
-                    Text(childrenRightsForumPosts[index].content),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'By ${childrenRightsForumPosts[index].author} - ${childrenRightsForumPosts[index].date}',
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            );
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
+
+ Future<void> _launchUrl(Uri url) async {
+  try {
+    if (!await launch(url.toString())) {
+      throw 'Could not launch $url';
+    }
+  } catch (e) {
+    print('Error launching URL: $e');
+  }
+}
+
 }
